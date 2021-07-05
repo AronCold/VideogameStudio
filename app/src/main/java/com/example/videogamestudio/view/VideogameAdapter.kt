@@ -9,20 +9,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.videogamestudio.R
 import com.squareup.picasso.Picasso
 
-class VideogameAdapter(val videogame:List<Videogame>):RecyclerView.Adapter<VideogameAdapter.HeroHolder>(){
+class VideogameAdapter(val videogame:List<Videogame>):RecyclerView.Adapter<VideogameAdapter.VideogameHolder>(){
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeroHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideogameHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return HeroHolder(layoutInflater.inflate(R.layout.item_videogame, parent, false))
+        return VideogameHolder(layoutInflater.inflate(R.layout.item_videogame, parent, false))
     }
 
-    override fun onBindViewHolder(holder: HeroHolder, position: Int) {
+    override fun onBindViewHolder(holder: VideogameHolder, position: Int) {
         holder.render(videogame[position])
     }
 
     override fun getItemCount(): Int = videogame.size
 
-    class HeroHolder(val view: View):RecyclerView.ViewHolder(view){
+    class VideogameHolder(val view: View):RecyclerView.ViewHolder(view){
         fun render(videogame: Videogame){
             view.findViewById<TextView>(R.id.tvName).text=videogame.name
             view.findViewById<TextView>(R.id.tvAge).text=videogame.age
