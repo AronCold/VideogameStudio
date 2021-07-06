@@ -1,15 +1,15 @@
 package com.example.videogamestudio.view
 
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.videogamestudio.R
 import com.example.videogamestudio.model.Model
 import com.example.videogamestudio.presenter.Presenter
-
+import proto.Game
 
 
 class MainActivity : AppCompatActivity(), MainViewVG{
@@ -34,6 +34,8 @@ class MainActivity : AppCompatActivity(), MainViewVG{
         Videogame("Spiderman", "Marvel", "Peter Parker", " Wii", "https://cursokotlin.com/wp-content/uploads/2017/07/spiderman.jpg")
 
     )
+
+    override var games = ArrayList<Videogame>()
 
     lateinit var presenter: Presenter
 
