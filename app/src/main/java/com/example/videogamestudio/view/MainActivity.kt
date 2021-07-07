@@ -1,6 +1,7 @@
 package com.example.videogamestudio.view
 
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.SearchView
 import android.widget.SearchView.OnQueryTextListener
@@ -46,7 +47,9 @@ class MainActivity : AppCompatActivity(), MainViewVG{
 
     lateinit var searchButton: SearchView
 
+    lateinit var adapter : VideogameAdapter
 
+    lateinit var contexto : Context
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,12 +64,15 @@ class MainActivity : AppCompatActivity(), MainViewVG{
 
         searchButton= findViewById(R.id.search_button)
 
+        contexto = applicationContext
+
         searchButton.setOnQueryTextListener(object :OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if(query!=null){
-                    searchedGames=presenter.getGames(query)
-                    val adapter = VideogameAdapter(searchedGames)
-                    rvVideogames.adapter=adapter
+                    presenter.getGames(query)
+                    searchedGames = presenter.games
+                    adapter.videogames = searchedGames
+                    adapter.notifyDataSetChanged();
                 }
                 return true
             }
@@ -82,8 +88,8 @@ class MainActivity : AppCompatActivity(), MainViewVG{
 
 
     private fun initRecycler(){
-        rvVideogames.layoutManager =LinearLayoutManager(this)
-        val adapter = VideogameAdapter(games)
+        rvVideogames.layoutManager = LinearLayoutManager(this)
+        adapter = VideogameAdapter(games)
         rvVideogames.adapter=adapter
     }
 

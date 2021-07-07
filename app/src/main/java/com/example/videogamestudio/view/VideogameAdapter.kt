@@ -12,7 +12,7 @@ import com.example.videogamestudio.R
 import com.squareup.picasso.Picasso
 import proto.Game
 
-class VideogameAdapter(val videogame: List<Game>) :
+class VideogameAdapter(var videogames: List<Game>) :
     RecyclerView.Adapter<VideogameAdapter.VideogameHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideogameHolder {
@@ -22,14 +22,10 @@ class VideogameAdapter(val videogame: List<Game>) :
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: VideogameHolder, position: Int) {
-        holder.render(videogame[position])
+        holder.render(videogames[position])
     }
 
-    override fun getItemCount(): Int = videogame.size
-
-    public updateData(games: List<Game>){
-        videogame.clear()
-    }
+    override fun getItemCount(): Int = videogames.size
 
     class VideogameHolder(val view: View) : RecyclerView.ViewHolder(view) {
         @RequiresApi(Build.VERSION_CODES.O)

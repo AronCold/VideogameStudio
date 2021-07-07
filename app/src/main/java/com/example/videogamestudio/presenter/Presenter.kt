@@ -9,19 +9,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import proto.Game
 
-lateinit var tokenAcceso:String
-
-
 class Presenter(val view: MainViewVG, val model: Model) {
-    fun getGames(query: String?): List<Game> {
-        return model.getGames(query)
-    }
-
-    private var games = emptyList<Game>()
-        set(value) {
-            field = value
-            view.games = games
-        }
+    var games = emptyList<Game>()
 
     init {
         GlobalScope.launch(Dispatchers.Main) {
@@ -30,14 +19,12 @@ class Presenter(val view: MainViewVG, val model: Model) {
             }
         }
     }
-        /*model.getToken(
-            {
-                response ->
-                Log.d("PideToken", "Estoy de vuelta en el onResponse, el token es: $response")
-                tokenAcceso = response
-                model.getTestQuerry({
-                        response ->
-                    Log.d("PideQuerry", "Estoy de vuelta en el onResponse, la lista de juegos es: $response")
-                }, { error -> view.showError(error.toString())}, tokenAcceso)
-        }, { error -> view.showError(error.toString())})*/
+
+    fun getGames(query: String?) {
+        GlobalScope.launch(Dispatchers.Main) {
+            withContext(Dispatchers.IO) {
+                games = model.getGames(query)
+            }
+        }
+    }
 }

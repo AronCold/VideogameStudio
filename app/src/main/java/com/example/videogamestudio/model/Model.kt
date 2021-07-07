@@ -25,7 +25,7 @@ class Model(context: Context) {
     }
 
     fun getGames(query: String?): List<Game> {
-        Log.d("PideJuegos", "Estoy en el model." )
+        Log.d("PideJuegos", "Model: Asking games" )
         return network.getGames(query)
     }
 }
