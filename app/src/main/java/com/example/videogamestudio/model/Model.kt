@@ -3,7 +3,6 @@ package com.example.videogamestudio.model
 import android.content.Context
 import android.util.Log
 import com.example.videogamestudio.network.Network
-import com.example.videogamestudio.view.Videogame
 import proto.Game
 
 class Model(context: Context) {
@@ -25,8 +24,8 @@ class Model(context: Context) {
         network.setToken()
     }
 
-    fun getGames() : ArrayList<Videogame> {
+    fun getGames(query: String?): List<Game> {
         Log.d("PideJuegos", "Estoy en el model." )
-        return network.getGames()
+        return network.getGames(query)
     }
 }

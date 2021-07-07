@@ -19,25 +19,31 @@
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Jos es reputo"/>
+            tools:text="name"/>
 
         <TextView
-            android:id="@+id/tvAge"
+            android:id="@+id/tvGenres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="el putaso"/>
+            tools:text="genre"/>
+
+        <TextView
+            android:id="@+id/tvReleaseDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="age"/>
 
         <TextView
             android:id="@+id/tvPublisher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="sus padres" />
+            android:text="publisher" />
 
         <TextView
             android:id="@+id/tvConsoles"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="es homosexual" />
+            android:text="consoles" />
 
     </LinearLayout>
 
