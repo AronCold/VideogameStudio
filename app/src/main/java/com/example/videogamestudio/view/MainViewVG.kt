@@ -4,7 +4,9 @@ import proto.Game
 
 interface MainViewVG {
 
-    var games : List<Game>
+    var recyclerGames : List<Game>
+    var historialJuegos : List<Game>
     fun showError(message: String)
-    var searchedGames: List<Game>
+    fun updateGames(games : List<Game>)
+    fun updateRecycler()
 }

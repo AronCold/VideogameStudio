@@ -27,6 +27,8 @@ class Network private constructor(context: Context) {
 
     var tokenString: String? = null
 
+    var searchedGames = emptyList<Game>()
+
 
     fun setToken() {
 
@@ -40,21 +42,39 @@ class Network private constructor(context: Context) {
         Log.d("PideJuegos", "Network: " + TwitchAuthenticator.twitchToken!!.access_token)
     }
 
-    fun getGames(query: String?): List<Game> {
-        var games = emptyList<Game>()
-        val apicalypse = APICalypse()
-            .fields("*, involved_companies.company.name, genres.name, cover.url")
-            .search(query!!)
-            .limit(500)
-        try {
-            games = IGDBWrapper.games(apicalypse)
-            Log.d("PideJuegos", games.toString())
-            if (games.isNotEmpty())
-                Log.d("PideJuegos", games[0].name)
-            else Log.d("PideJuegos", "Juegos esta vacio")
-        } catch (e: RequestException) {
-            Log.d("PideJuegos", "Eroor")
+    @DelicateCoroutinesApi
+    suspend fun getGames(query: String?, busquedaRelacionada : Boolean) {
+        if (busquedaRelacionada) {
+            Log.d("BusquedaRelacionada", "Estoy en network")
+        } else {
+            var games = emptyList<Game>()
+            val value = GlobalScope.async {
+                val apicalypse = APICalypse()
+                    .fields(
+                        "*, " +
+                                "involved_companies.company.name, " +
+                                "genres.name, " +
+                                "cover.url," +
+                                "cover.height," +
+                                "cover.width"
+                    )
+                    .search(query!!)
+                    .limit(500)
+                try {
+                    games = IGDBWrapper.games(apicalypse)
+                    //Log.d("PideJuegos", games.toString())
+                    if (games.isNotEmpty()){
+                        Log.d("PideJuegos", games[0].cover.height.toString())
+                        Log.d("PideJuegos", games[0].cover.width.toString())
+                        Log.d("PideJuegos", games[0].cover.url)
+                    }
+                    else Log.d("PideJuegos", "Juegos esta vacio")
+                } catch (e: RequestException) {
+                    Log.d("PideJuegos", "Eroor")
+                }
+            }
+            println(value.await())
+            searchedGames = games
         }
-        return games
     }
 }
