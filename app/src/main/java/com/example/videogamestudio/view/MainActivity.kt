@@ -56,6 +56,9 @@ class MainActivity : AppCompatActivity(), MainViewVG {
                     Log.d("PideJuegos", "llamando a presenter.getGames")
                     presenter.getGamesByName(query)
                 }
+                else {
+                    TODO("Si la cadena es nula actualizar el recicler con el historial de juegos")
+                }
                 return true
             }
 
