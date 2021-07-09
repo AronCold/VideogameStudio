@@ -143,12 +143,22 @@ class MainActivity : AppCompatActivity(), MainViewVG {
         var keywords: MutableList<String> = ArrayList()
         game.keywordsList.forEach { keywords.add(it.name) }
         Log.d("PideJuegos", game.name + " : " + keywords.toString())
+
+        var genres: MutableList<String> = ArrayList()
+        game.genresList.forEach { genres.add(it.name) }
+
+        var platforms: MutableList<String> = ArrayList()
+        game.platformsList.forEach { platforms.add(it.name) }
+
+        var involved_companies: MutableList<String> = ArrayList()
+        game.involvedCompaniesList.forEach { involved_companies.add(it.company.name) }
+
         return Videogame(
             game.name,
             java.util.Date(game.firstReleaseDate.seconds * 1000),
-            game.genresList,
-            game.involvedCompaniesList,
-            game.platformsList,
+            genres,
+            involved_companies,
+            platforms,
             "https:" + game.cover.url.replace("t_thumb", "t_cover_big"),
             game.aggregatedRating,
             game.summary,

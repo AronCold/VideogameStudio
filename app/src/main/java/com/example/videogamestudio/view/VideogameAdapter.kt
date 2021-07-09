@@ -3,6 +3,7 @@ package com.example.videogamestudio.view
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,18 +55,28 @@ class VideogameAdapter(var videogames: List<Videogame>) :
 
             var empresas = ""
 
-            videogame.involved_companies.forEach {
-                empresas += it.company.name + " ,"
+            Log.d("test", videogame.involved_companies.toString())
+            if (videogame.involved_companies.size > 1) {
+                for (i in 0 until videogame.involved_companies.size - 2) {
+                    empresas += videogame.involved_companies[i] + ", "
+                }
+                empresas += videogame.involved_companies[videogame.involved_companies.size-1]
             }
+            else if (videogame.involved_companies.size == 1) empresas += videogame.involved_companies[0]
 
             view.findViewById<TextView>(R.id.tvPublisher).text = empresas
 
             //hacer tambien con CONSOLAS
             var consolas = ""
 
-            videogame.platforms.forEach {
-                consolas += it.name + " ,"
+            if (videogame.platforms.size > 1) {
+                for (i in 0 until videogame.platforms.size - 2) {
+                    consolas += videogame.platforms[i] + ", "
+                }
+                consolas += videogame.platforms[videogame.platforms.size-1]
+                Log.d("test", videogame.platforms.toString())
             }
+            else if (videogame.platforms.size == 1) consolas += videogame.platforms[0]
 
             view.findViewById<TextView>(R.id.tvConsoles).text = consolas
 

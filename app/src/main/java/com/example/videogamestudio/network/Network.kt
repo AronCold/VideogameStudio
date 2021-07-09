@@ -117,18 +117,24 @@ class Network private constructor(context: Context) {
         println(value.await())
         val juegosSimilares = games[0].similarGamesList
         val juegosPropiedades : MutableList<Game> = ArrayList()
+        Log.d("test", properties.toString())
         juegosSimilares.forEach { juego ->
             var keyword = false
+            var genre = false
             var platform = false
             juego.keywordsList.forEach {
                 if(it.name == properties[0])
                     keyword = true
             }
+            juego.genresList.forEach {
+                if(it.name == properties[1])
+                genre = true
+            }
             juego.platformsList.forEach {
-                if(it.name == "Nintendo Switch")
+                if(it.name == properties[2])
                     platform = true
             }
-            if(keyword && platform) {
+            if(keyword && genre && platform) {
                 juegosPropiedades.add(juego)
                 Log.d("RelatedSearch", juego.name + " , " + juego.keywordsList + " , " + juego.platformsList)
             }

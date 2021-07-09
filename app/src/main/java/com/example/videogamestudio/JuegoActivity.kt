@@ -1,5 +1,6 @@
 package com.example.videogamestudio
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -37,6 +38,7 @@ class JuegoActivity : AppCompatActivity() {
     lateinit var btnRelated : Button
     lateinit var context : Context
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_juego)
@@ -65,25 +67,45 @@ class JuegoActivity : AppCompatActivity() {
         Log.d("Testeo", date.toString())
         tvReleaseDate.text = date.toString()
 
-        tvGenre.text = "Género/s: \n $videogame.genres.toString()"
+        var generos = ""
+
+        if (videogame.genres.size > 1) {
+            for (i in 0 until videogame.genres.size - 2) {
+                generos += videogame.genres[i] + ", "
+            }
+            generos += videogame.genres[videogame.genres.size-1]
+        }
+        else if (videogame.genres.size == 1) generos += videogame.genres[0]
+
+        tvGenre.text = "Genres: \n $generos"
 
         var empresas = ""
 
-        videogame.involved_companies.forEach {
-            empresas += it.company.name + " ,"
+        if (videogame.involved_companies.size > 1) {
+            for (i in 0 until videogame.involved_companies.size - 2) {
+                empresas += videogame.involved_companies[i] + ", "
+            }
+            empresas += videogame.involved_companies[videogame.involved_companies.size-1]
         }
-        tvPublisher.text = "Desarrolladora/as: \n $empresas"
+        else if (videogame.involved_companies.size == 1) empresas += videogame.involved_companies[0]
+
+        tvPublisher.text = "Devellopers: \n $empresas"
 
         var consolas = ""
 
-        videogame.platforms.forEach {
-            consolas += it.name + " ,"
+        if (videogame.platforms.size > 1) {
+            for (i in 0 until videogame.platforms.size - 2) {
+                consolas += videogame.platforms[i] + ", "
+            }
+            consolas += videogame.platforms[videogame.platforms.size-1]
         }
-        tvConsoles.text = "Disponible para: \n $consolas"
+        else if (videogame.platforms.size == 1) consolas += videogame.platforms[0]
+
+        tvConsoles.text = "Available on: \n $consolas"
 
         tvRating.text = videogame.aggregated_rating.roundToInt().toString() + "%"
 
-        tvInfo.text = "Información: \n ${videogame.summary}"
+        tvInfo.text = "Summary: \n ${videogame.summary}"
 
         var coverVG = videogame.image
 

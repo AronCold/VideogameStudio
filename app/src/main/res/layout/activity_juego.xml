@@ -7,103 +7,131 @@
     tools:context=".JuegoActivity"
     android:orientation="vertical">
 
-
-    <ImageView
-        android:id="@+id/ivVideogame"
-        android:layout_width="161dp"
-        android:layout_height="177dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.064"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="368dp"
-        android:layout_height="89dp"
-        android:layout_marginTop="4dp"
-        android:textSize="35dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.368"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivVideogame"
-        tools:text="name" />
-
-    <TextView
-        android:id="@+id/tvReleaseDate"
-        android:layout_width="188dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="12dp"
-        android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="@+id/tvRating"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/ivVideogame"
-        app:layout_constraintTop_toBottomOf="@+id/tvRating"
-        tools:text="age" />
-
-    <TextView
-        android:id="@+id/tvGenre"
-        android:layout_width="373dp"
-        android:layout_height="33dp"
-        android:text="genre"
-        app:layout_constraintStart_toStartOf="@+id/tvName"
-        app:layout_constraintTop_toBottomOf="@+id/tvName" />
-
-    <TextView
-        android:id="@+id/tvPublisher"
-        android:layout_width="368dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="8dp"
-        android:text="publisher"
-        app:layout_constraintStart_toStartOf="@+id/tvGenre"
-        app:layout_constraintTop_toBottomOf="@+id/tvGenre" />
-
-    <TextView
-        android:id="@+id/tvConsoles"
-        android:layout_width="367dp"
-        android:layout_height="71dp"
-        android:layout_marginTop="4dp"
-        android:text="consoles"
-        app:layout_constraintStart_toStartOf="@+id/tvPublisher"
-        app:layout_constraintTop_toBottomOf="@+id/tvPublisher" />
-
-    <TextView
-        android:id="@+id/tvRating"
-        android:layout_width="110dp"
-        android:layout_height="112dp"
-        android:layout_marginStart="80dp"
-        android:text="rating"
-        android:textSize="50dp"
-        app:layout_constraintBottom_toBottomOf="@+id/ivVideogame"
-        app:layout_constraintEnd_toEndOf="@+id/tvName"
-        app:layout_constraintStart_toEndOf="@+id/ivVideogame"
-        app:layout_constraintTop_toTopOf="@+id/ivVideogame"
-        app:layout_constraintVertical_bias="0.2" />
-
-    <TextView
-        android:id="@+id/tvInfo"
-        android:layout_width="378dp"
-        android:layout_height="139dp"
-        android:layout_marginTop="16dp"
-        android:text="info"
-        app:layout_constraintStart_toStartOf="@+id/tvConsoles"
-        app:layout_constraintTop_toBottomOf="@+id/tvConsoles" />
-
-    <Button
-        android:id="@+id/rsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:text="BUSCAR JUEGOS RELACIONADOS"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvInfo"
-        app:layout_constraintVertical_bias="0.333" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="-28dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivVideogame"
+                android:layout_width="161dp"
+                android:layout_height="180dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="200dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="368dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textSize="35dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivVideogame"
+                tools:text="name" />
+
+            <TextView
+                android:id="@+id/tvReleaseDate"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:textSize="25dp"
+                app:layout_constraintEnd_toEndOf="@+id/tvRating"
+                app:layout_constraintStart_toStartOf="@+id/tvRating"
+                app:layout_constraintTop_toBottomOf="@+id/tvRating"
+                tools:text="age" />
+
+            <TextView
+                android:id="@+id/tvGenre"
+                android:layout_width="373dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="genre"
+                app:layout_constraintStart_toStartOf="@+id/tvName"
+                app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+            <TextView
+                android:id="@+id/tvPublisher"
+                android:layout_width="368dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="publisher"
+                app:layout_constraintStart_toStartOf="@+id/tvGenre"
+                app:layout_constraintTop_toBottomOf="@+id/tvGenre" />
+
+            <TextView
+                android:id="@+id/tvConsoles"
+                android:layout_width="367dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="consoles"
+                app:layout_constraintStart_toStartOf="@+id/tvPublisher"
+                app:layout_constraintTop_toBottomOf="@+id/tvPublisher" />
+
+            <TextView
+                android:id="@+id/tvRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="50%"
+                android:textSize="50dp"
+                app:layout_constraintBottom_toBottomOf="@+id/ivVideogame"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivVideogame"
+                app:layout_constraintTop_toTopOf="@+id/ivVideogame" />
+
+            <TextView
+                android:id="@+id/tvInfo"
+                android:layout_width="378dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="info"
+                app:layout_constraintStart_toStartOf="@+id/tvConsoles"
+                app:layout_constraintTop_toBottomOf="@+id/tvConsoles" />
+
+            <Button
+                android:id="@+id/rsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="bottom"
+                android:text="BUSCAR JUEGOS RELACIONADOS"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvInfo"
+                app:layout_constraintVertical_bias="0.333" />
+
+            <TextView
+                android:id="@+id/ratingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="RATING"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/tvRating"
+                app:layout_constraintEnd_toEndOf="@+id/tvRating"
+                app:layout_constraintStart_toStartOf="@+id/tvRating"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
