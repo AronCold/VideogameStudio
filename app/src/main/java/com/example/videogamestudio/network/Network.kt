@@ -43,39 +43,96 @@ class Network private constructor(context: Context) {
     }
 
     @DelicateCoroutinesApi
-    suspend fun getGames(query: String?, busquedaRelacionada : Boolean) {
-        if (busquedaRelacionada) {
-            Log.d("BusquedaRelacionada", "Estoy en network")
-        } else {
-            var games = emptyList<Game>()
-            val value = GlobalScope.async {
-                val apicalypse = APICalypse()
-                    .fields(
-                        "*, " +
-                                "involved_companies.company.name, " +
-                                "genres.name, " +
-                                "cover.url," +
-                                "cover.height," +
-                                "cover.width," +
-                                "platforms.name"
-                    )
-                    .search(query!!)
-                    .limit(500)
-                try {
-                    games = IGDBWrapper.games(apicalypse)
-                    //Log.d("PideJuegos", games.toString())
-                    if (games.isNotEmpty()){
-                        Log.d("PideJuegos", games[0].cover.height.toString())
-                        Log.d("PideJuegos", games[0].cover.width.toString())
-                        Log.d("PideJuegos", games[0].platformsList[0].name)
-                    }
-                    else Log.d("PideJuegos", "Juegos esta vacio")
-                } catch (e: RequestException) {
-                    Log.d("PideJuegos", "Eroor")
-                }
+    suspend fun getGames(query: String?) {
+        var games = emptyList<Game>()
+        val value = GlobalScope.async {
+            val apicalypse = APICalypse()
+                .fields(
+                    "name," +
+                            "first_release_date," +
+                            "involved_companies.company.name," +
+                            "genres.name," +
+                            "cover.url," +
+                            "platforms.name," +
+                            "aggregated_rating," +
+                            "summary," +
+                            "keywords.name"
+                )
+                .search(query!!)
+                .limit(500)
+            try {
+                games = IGDBWrapper.games(apicalypse)
+                //Log.d("PideJuegos", games.toString())
+                if (games.isNotEmpty()) {
+                    Log.d("PideJuegos", games[0].name)
+                } else Log.d("PideJuegos", "Juegos esta vacio")
+            } catch (e: RequestException) {
+                Log.d("PideJuegos", "Eroor")
             }
-            println(value.await())
-            searchedGames = games
         }
+        println(value.await())
+        searchedGames = games
+    }
+
+    @DelicateCoroutinesApi
+    suspend fun getGamesByProperties(properties : ArrayList<String>) {
+        var games = emptyList<Game>()
+        val value = GlobalScope.async {
+            val apicalypse = APICalypse()
+                .fields(
+                    "name," +
+                            "first_release_date," +
+                            "involved_companies.company.name, " +
+                            "genres.name, " +
+                            "cover.url," +
+                            "platforms.name," +
+                            "aggregated_rating," +
+                            "summary," +
+                            "keywords.name," +
+                            "similar_games.name," +
+                            "similar_games.first_release_date," +
+                            "similar_games.involved_companies.company.name, " +
+                            "similar_games.genres.name, " +
+                            "similar_games.cover.url," +
+                            "similar_games.platforms.name," +
+                            "similar_games.aggregated_rating," +
+                            "similar_games.summary," +
+                            "similar_games.keywords.name"
+                )
+                .limit(500)
+                .where("id = ${properties[3]}")
+            try {
+                games = IGDBWrapper.games(apicalypse)
+                //Log.d("PideJuegos", games.toString())
+                if (games.isNotEmpty()) {
+                    Log.d("PideJuegos", games[0].cover.height.toString())
+                    Log.d("PideJuegos", games[0].cover.width.toString())
+                    Log.d("PideJuegos", games[0].similarGamesList.toString())
+                } else Log.d("PideJuegos", "Juegos esta vacio")
+            } catch (e: RequestException) {
+                Log.d("PideJuegos", "Eroor")
+                e.printStackTrace()
+            }
+        }
+        println(value.await())
+        val juegosSimilares = games[0].similarGamesList
+        val juegosPropiedades : MutableList<Game> = ArrayList()
+        juegosSimilares.forEach { juego ->
+            var keyword = false
+            var platform = false
+            juego.keywordsList.forEach {
+                if(it.name == properties[0])
+                    keyword = true
+            }
+            juego.platformsList.forEach {
+                if(it.name == "Nintendo Switch")
+                    platform = true
+            }
+            if(keyword && platform) {
+                juegosPropiedades.add(juego)
+                Log.d("RelatedSearch", juego.name + " , " + juego.keywordsList + " , " + juego.platformsList)
+            }
+        }
+        searchedGames = juegosPropiedades
     }
 }

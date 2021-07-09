@@ -10,6 +10,6 @@ class Videogame(
     val name:String, val releaseDate:Date,
     val genres: List<Genre>, val involved_companies: MutableList<InvolvedCompany>,
     val platforms: MutableList<Platform>, val image:String,
-    val aggregated_rating: Double, val summary: String, val id : Int) : Serializable
+    val aggregated_rating: Double, val summary: String, val id : Int, val keywords : List<String>) : Serializable
 {
 }

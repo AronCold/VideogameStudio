@@ -55,7 +55,7 @@ class VideogameAdapter(var videogames: List<Videogame>) :
             var empresas = ""
 
             videogame.involved_companies.forEach {
-                empresas += it.company.name + " "
+                empresas += it.company.name + " ,"
             }
 
             view.findViewById<TextView>(R.id.tvPublisher).text = empresas
@@ -64,7 +64,7 @@ class VideogameAdapter(var videogames: List<Videogame>) :
             var consolas = ""
 
             videogame.platforms.forEach {
-                consolas += it.name + " "
+                consolas += it.name + " ,"
             }
 
             view.findViewById<TextView>(R.id.tvConsoles).text = consolas

@@ -17,10 +17,15 @@ class Model(context: Context) {
 
     @DelicateCoroutinesApi
     suspend fun askGamesByName(query: String?) {
-        network.getGames(query, false)
+        network.getGames(query)
     }
 
     fun getGames(): List<Game>{
         return network.searchedGames
+    }
+
+    @DelicateCoroutinesApi
+    suspend fun askGamesByProperties(properties : ArrayList<String>) {
+        network.getGamesByProperties(properties)
     }
 }

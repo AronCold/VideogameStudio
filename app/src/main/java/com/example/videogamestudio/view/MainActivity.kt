@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity(), MainViewVG {
 
     override var recyclerGames = emptyList<Videogame>()
     override var historialJuegos = emptyList<Videogame>()
+    override var JUEGOSVACIO = emptyList<Videogame>()
 
     lateinit var presenter: Presenter
 
@@ -37,6 +38,8 @@ class MainActivity : AppCompatActivity(), MainViewVG {
     lateinit var adapter: VideogameAdapter
 
     lateinit var contexto: Context
+
+    lateinit var properties: ArrayList<String>
 
 
     @DelicateCoroutinesApi
@@ -62,8 +65,7 @@ class MainActivity : AppCompatActivity(), MainViewVG {
                 if (!query.equals("sHistory")) {
                     Log.d("PideJuegos", "llamando a presenter.getGames")
                     presenter.getGamesByName(query)
-                }
-                else {
+                } else {
                     //si la cadena es nula actualizar el recicler con el historial de juegos
                     historialJuegos = recibeHistorial()
                     Log.d("Historial", "Recibimos el historial")
@@ -72,7 +74,6 @@ class MainActivity : AppCompatActivity(), MainViewVG {
                 searchButton.clearFocus()
                 return true
             }
-
 
 
             override fun onQueryTextChange(newText: String?): Boolean {
@@ -84,14 +85,31 @@ class MainActivity : AppCompatActivity(), MainViewVG {
         historialJuegos = recibeHistorial()
         Log.d("Historial", "Recibimos el historial")
 
-        initRecycler()
+        //recibimos propiedades
+        properties = arrayListOf("Empty", "Empty", "Empty")
+        if (!intent.getStringArrayListExtra("Properties").isNullOrEmpty()) {
+            properties = intent.getStringArrayListExtra("Properties") as ArrayList<String>
+            Log.d("RelatedSearch", "El intent no está vacío")
+        }
+
+        if (properties[0] == "Empty"
+            && properties[1] == "Empty"
+            && properties[2] == "Empty"
+        ) {
+            Log.d("RelatedSearch", "Propiedades está vacío, iniciando historial")
+            initRecycler(historialJuegos)
+        } else {
+            Log.d("RelatedSearch", "Propiedades no está vacío, requesting game")
+            initRecycler(JUEGOSVACIO)
+            presenter.getGamesByProperties(properties)
+        }
     }
 
     private fun recibeHistorial(): MutableList<Videogame> {
-        var mPrefs = getSharedPreferences("historialJuegos", MODE_PRIVATE)
+        val mPrefs = getSharedPreferences("historialJuegos", MODE_PRIVATE)
 
-        if(!mPrefs.getString("listaHistorial", "").equals("")){
-            var historialJSONString = mPrefs.getString("listaHistorial", "")
+        if (!mPrefs.getString("listaHistorial", "").equals("")) {
+            val historialJSONString = mPrefs.getString("listaHistorial", "")
             val type = object : TypeToken<MutableList<Videogame?>?>() {}.type
             return Gson().fromJson(historialJSONString, type)
         }
@@ -99,9 +117,9 @@ class MainActivity : AppCompatActivity(), MainViewVG {
     }
 
 
-    private fun initRecycler() {
+    private fun initRecycler(juegos: List<Videogame>) {
         rvVideogames.layoutManager = LinearLayoutManager(this)
-        adapter = VideogameAdapter(historialJuegos)
+        adapter = VideogameAdapter(juegos)
         rvVideogames.adapter = adapter
     }
 
@@ -109,11 +127,11 @@ class MainActivity : AppCompatActivity(), MainViewVG {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
-    override fun updateGames(games : List<Game>) {
+    override fun updateGames(games: List<Game>) {
 
-        var listaTemporal : MutableList<Videogame> = ArrayList()
-        if(!games.isEmpty()){
-            for(i in 0..games.size-1) {
+        var listaTemporal: MutableList<Videogame> = ArrayList()
+        if (!games.isEmpty()) {
+            for (i in 0..games.size - 1) {
                 listaTemporal.add(convertirJuego(games[i]))
             }
         }
@@ -122,6 +140,9 @@ class MainActivity : AppCompatActivity(), MainViewVG {
     }
 
     private fun convertirJuego(game: Game): Videogame {
+        var keywords: MutableList<String> = ArrayList()
+        game.keywordsList.forEach { keywords.add(it.name) }
+        Log.d("PideJuegos", game.name + " : " + keywords.toString())
         return Videogame(
             game.name,
             java.util.Date(game.firstReleaseDate.seconds * 1000),
@@ -131,11 +152,12 @@ class MainActivity : AppCompatActivity(), MainViewVG {
             "https:" + game.cover.url.replace("t_thumb", "t_cover_big"),
             game.aggregatedRating,
             game.summary,
-            game.id.toInt()
+            game.id.toInt(),
+            keywords
         )
     }
 
-    override fun updateRecycler(juegos : List<Videogame>) {
+    override fun updateRecycler(juegos: List<Videogame>) {
         Log.d("PideJuegos", "Updating Recycler")
         adapter.videogames = juegos
         adapter.notifyDataSetChanged();
@@ -145,7 +167,7 @@ class MainActivity : AppCompatActivity(), MainViewVG {
         super.onDestroy()
         //TOD("Guardar historial")
         var mPrefs = getSharedPreferences("historialJuegos", MODE_PRIVATE)
-        var editor : SharedPreferences.Editor = mPrefs.edit()
+        var editor: SharedPreferences.Editor = mPrefs.edit()
 
         var historialJSONString = Gson().toJson(historialJuegos);
         editor.putString("listaHistorial", historialJSONString);

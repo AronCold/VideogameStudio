@@ -33,4 +33,17 @@ class Presenter(val view: MainViewVG, val model: Model) {
         }
     }
 
+    @DelicateCoroutinesApi
+    fun getGamesByProperties(properties : ArrayList<String>) {
+        GlobalScope.launch(Dispatchers.Main) {
+            withContext(Dispatchers.IO) {
+                Log.d("PideJuegos", "Estoy en la corrutina que bloquea, pido juegos")
+                model.askGamesByProperties(properties)
+            }
+            Log.d("PideJuegos", "Actualizando juegos del view")
+            games = model.getGames()
+            view.updateGames(games)
+            view.updateRecycler(view.recyclerGames)
+        }
+    }
 }
