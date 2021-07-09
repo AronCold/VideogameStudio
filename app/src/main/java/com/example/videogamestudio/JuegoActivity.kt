@@ -13,7 +13,9 @@ import android.widget.TextView
 import com.example.videogamestudio.model.Videogame
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.squareup.picasso.Picasso
 import proto.Game
+import kotlin.math.roundToInt
 import kotlin.time.measureTimedValue
 
 class JuegoActivity : AppCompatActivity() {
@@ -53,11 +55,40 @@ class JuegoActivity : AppCompatActivity() {
 
         //recibe juego
         videogame = intent.getSerializableExtra("Juego") as Videogame
+
         tvName.text = videogame.name
-        tvReleaseDate.text = videogame.releaseDate.toString()
-        tvGenre.text = videogame.genres.toString()
-        tvPublisher.text = videogame.involved_companies.toString()
-        tvConsoles.text = videogame.platforms.toString()
+
+        val sdf = java.text.SimpleDateFormat("yyyy-MM-dd")
+        val netDate = videogame.releaseDate
+        val date = sdf.format(netDate)
+
+        Log.d("Testeo", date.toString())
+        tvReleaseDate.text = date.toString()
+
+        tvGenre.text = "Género/s: \n $videogame.genres.toString()"
+
+        var empresas = ""
+
+        videogame.involved_companies.forEach {
+            empresas += it.company.name + " ,"
+        }
+        tvPublisher.text = "Desarrolladora/as: \n $empresas"
+
+        var consolas = ""
+
+        videogame.platforms.forEach {
+            consolas += it.name + " ,"
+        }
+        tvConsoles.text = "Disponible para: \n $consolas"
+
+        tvRating.text = videogame.aggregated_rating.roundToInt().toString() + "%"
+
+        tvInfo.text = "Información: \n ${videogame.summary}"
+
+        var coverVG = videogame.image
+
+        Picasso.get().load(coverVG)
+            .into(findViewById<ImageView>(R.id.ivVideogame))
 
 
         //"Recibir juego en el intent")
@@ -102,9 +133,9 @@ class JuegoActivity : AppCompatActivity() {
 
         //guardarLista
         var editor : SharedPreferences.Editor = mPrefs.edit()
-        historialJSONString = Gson().toJson(historialLista);
-        editor.putString("listaHistorial", historialJSONString);
-        editor.commit();
+        historialJSONString = Gson().toJson(historialLista)
+        editor.putString("listaHistorial", historialJSONString)
+        editor.commit()
         Log.d("Juego añadido", "Lista guardada")
     }
 }
