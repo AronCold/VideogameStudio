@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.widget.SearchView
 import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
@@ -129,14 +130,19 @@ class MainActivity : AppCompatActivity(), MainViewVG {
 
     override fun updateGames(games: List<Game>) {
 
-        var listaTemporal: MutableList<Videogame> = ArrayList()
         if (!games.isEmpty()) {
-            for (i in 0..games.size - 1) {
-                listaTemporal.add(convertirJuego(games[i]))
+            var listaTemporal: MutableList<Videogame> = ArrayList()
+            if (!games.isEmpty()) {
+                for (i in 0..games.size - 1) {
+                    listaTemporal.add(convertirJuego(games[i]))
+                }
             }
+            recyclerGames = listaTemporal
         }
-
-        recyclerGames = listaTemporal
+        else{
+            recyclerGames = historialJuegos
+            Toast.makeText(applicationContext,"No games found.",Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun convertirJuego(game: Game): Videogame {
