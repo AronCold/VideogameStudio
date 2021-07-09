@@ -1,46 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="150dp"
+
+    android:baselineAligned="true"
     android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/ivVideogame"
-        android:layout_width="112dp"
-        android:layout_height="150dp"
+        android:layout_width="119dp"
+        android:layout_height="match_parent"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
+
 
         <TextView
             android:id="@+id/tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="name" />
-
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="2dp"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            tools:text=" name" />
 
         <TextView
             android:id="@+id/tvReleaseDate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="age" />
+            android:layout_marginLeft="10dp"
+            android:textSize="16dp"
+            app:autoSizeTextType="none"
+            tools:text=" age" />
 
         <TextView
             android:id="@+id/tvPublisher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="publisher" />
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:layout_marginLeft="10dp"
+            android:textStyle="italic"
+            android:text=" publisher"
+            android:textSize="12dp" />
 
         <TextView
             android:id="@+id/tvConsoles"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="consoles" />
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="6dp"
+            android:text=" consoles"
+            android:textSize="14dp" />
 
 
     </LinearLayout>

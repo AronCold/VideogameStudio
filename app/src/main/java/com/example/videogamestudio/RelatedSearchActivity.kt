@@ -13,7 +13,11 @@ import com.example.videogamestudio.view.MainActivity
 class RelatedSearchActivity : AppCompatActivity() {
 
     lateinit var test : TextView
+
     lateinit var keywordSpinner  : Spinner
+    lateinit var genresSpinner  : Spinner
+    lateinit var platformsSpinner  : Spinner
+
     lateinit var btnRelatedSearch : Button
     lateinit var context : Context
     lateinit var properties : ArrayList<String>
@@ -23,7 +27,11 @@ class RelatedSearchActivity : AppCompatActivity() {
         setContentView(R.layout.activity_related_search)
 
         test = findViewById(R.id.test)
+
         keywordSpinner = findViewById(R.id.spinnerKeyword)
+        genresSpinner = findViewById(R.id.spinnerGenre)
+        platformsSpinner = findViewById(R.id.spinnerPlatform)
+
         btnRelatedSearch = findViewById(R.id.btnRelatedSearch)
 
         val videogame = intent.getSerializableExtra("Juego") as Videogame
@@ -31,6 +39,7 @@ class RelatedSearchActivity : AppCompatActivity() {
 
         properties = arrayListOf("Empty", "Empty", "Empty", videogame.id.toString())
 
+        //keywords spinner
         val keywords = videogame.keywords as MutableList<String>
         if (keywords.isEmpty()) keywords.add("Not available")
         Log.d("RelatedSearch", keywords.toString())
@@ -47,6 +56,62 @@ class RelatedSearchActivity : AppCompatActivity() {
                 Log.d("RelatedSearch", "Item seleccionado: " + keywordSpinner.selectedItem.toString())
                 if(!keywordSpinner.selectedItem.toString().equals("Not available"))
                     properties[0] = keywordSpinner.selectedItem.toString()
+                Log.d("RelatedSearch", "Properties: $properties")
+
+                propiedadesValida()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+        }
+
+        //genres spinner
+        val genres = videogame.genres as MutableList<String>
+        if (genres.isEmpty()) genres.add("Not available")
+        Log.d("RelatedSearch", genres.toString())
+
+        val adaptador2 = ArrayAdapter(this, android.R.layout.simple_spinner_item, genres)
+        genresSpinner.adapter = adaptador2
+        genresSpinner.onItemSelectedListener=object: AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                Log.d("RelatedSearch", "Item seleccionado: " + genresSpinner.selectedItem.toString())
+                if(!genresSpinner.selectedItem.toString().equals("Not available"))
+                    properties[1] = genresSpinner.selectedItem.toString()
+                Log.d("RelatedSearch", "Properties: $properties")
+
+                propiedadesValida()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+        }
+
+        //platforms spinner
+        val platforms = videogame.platforms as MutableList<String>
+        if (platforms.isEmpty()) platforms.add("Not available")
+        Log.d("RelatedSearch", platforms.toString())
+
+        val adaptador3 = ArrayAdapter(this, android.R.layout.simple_spinner_item, platforms)
+        platformsSpinner.adapter = adaptador3
+        platformsSpinner.onItemSelectedListener=object: AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                Log.d("RelatedSearch", "Item seleccionado: " + platformsSpinner.selectedItem.toString())
+                if(!platformsSpinner.selectedItem.toString().equals("Not available"))
+                    properties[2] = platformsSpinner.selectedItem.toString()
                 Log.d("RelatedSearch", "Properties: $properties")
 
                 propiedadesValida()

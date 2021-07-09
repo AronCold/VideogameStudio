@@ -10,21 +10,83 @@
         android:id="@+id/test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="related search"
+        android:text="BÚSQUEDA ASOCIADA"
         app:layout_constraintBottom_toTopOf="@+id/spinnerKeyword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textkeyword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Palabra clave:"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerKeyword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/spinnerKeyword"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.894" />
 
     <Spinner
         android:id="@+id/spinnerKeyword"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="400dp"
+        android:dropDownSelector="@color/purple_200"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/test"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="@+id/test"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.495"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/textgenres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Género:"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerGenre"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/spinnerGenre"
+        app:layout_constraintTop_toBottomOf="@+id/textkeyword"
+        app:layout_constraintVertical_bias="0.9" />
+
+    <Spinner
+        android:id="@+id/spinnerGenre"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerKeyword"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/spinnerKeyword"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerKeyword"
+        app:layout_constraintVertical_bias="0.186" />
+
+    <TextView
+        android:id="@+id/textplatforms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Plataforma:"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerPlatform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/spinnerPlatform"
+        app:layout_constraintTop_toBottomOf="@+id/textgenres"
+        app:layout_constraintVertical_bias="0.9" />
+
+    <Spinner
+        android:id="@+id/spinnerPlatform"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerGenre"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/spinnerGenre"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerGenre"
+        app:layout_constraintVertical_bias="0.22" />
 
     <Button
         android:id="@+id/btnRelatedSearch"
@@ -32,8 +94,8 @@
         android:layout_height="wrap_content"
         android:text="Buscar"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerKeyword" />
+        app:layout_constraintEnd_toEndOf="@+id/spinnerPlatform"
+        app:layout_constraintStart_toStartOf="@+id/spinnerPlatform"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerPlatform" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

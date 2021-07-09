@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,51 +7,91 @@
     tools:context=".JuegoActivity"
     android:orientation="vertical">
 
+
     <ImageView
         android:id="@+id/ivVideogame"
-        android:layout_width="112dp"
-        android:layout_height="150dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_width="208dp"
+        android:layout_height="175dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/tvName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="374dp"
+        android:layout_height="87dp"
+        android:layout_marginTop="20dp"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivVideogame"
         tools:text="name" />
-
 
     <TextView
         android:id="@+id/tvReleaseDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="268dp"
+        android:layout_height="28dp"
+        android:textSize="25dp"
+        app:layout_constraintStart_toStartOf="@+id/tvName"
+        app:layout_constraintTop_toBottomOf="@+id/tvName"
         tools:text="age" />
 
     <TextView
+        android:id="@+id/tvGenre"
+        android:layout_width="272dp"
+        android:layout_height="32dp"
+        android:text="genre"
+        app:layout_constraintStart_toStartOf="@+id/tvReleaseDate"
+        app:layout_constraintTop_toBottomOf="@+id/tvReleaseDate" />
+
+    <TextView
         android:id="@+id/tvPublisher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="publisher" />
+        android:layout_width="272dp"
+        android:layout_height="32dp"
+        android:text="publisher"
+        app:layout_constraintStart_toStartOf="@+id/tvGenre"
+        app:layout_constraintTop_toBottomOf="@+id/tvGenre" />
 
     <TextView
         android:id="@+id/tvConsoles"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="consoles" />
+        android:layout_width="271dp"
+        android:layout_height="52dp"
+        android:text="consoles"
+        app:layout_constraintStart_toStartOf="@+id/tvPublisher"
+        app:layout_constraintTop_toBottomOf="@+id/tvPublisher" />
 
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tvRating"
+        android:layout_width="271dp"
+        android:layout_height="52dp"
+        android:text="rating"
+        app:layout_constraintStart_toStartOf="@+id/tvConsoles"
+        app:layout_constraintTop_toBottomOf="@+id/tvConsoles" />
+
+    <TextView
+        android:id="@+id/tvInfo"
+        android:layout_width="271dp"
+        android:layout_height="52dp"
+        android:text="info"
+        app:layout_constraintStart_toStartOf="@+id/tvRating"
+        app:layout_constraintTop_toBottomOf="@+id/tvRating" />
 
     <Button
         android:id="@+id/rsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Related Search"
-        android:gravity="bottom"/>
+        android:gravity="bottom"
+        android:text="BUSCAR JUEGOS RELACIONADOS"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivVideogame"
+        app:layout_constraintVertical_bias="0.756" />
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
