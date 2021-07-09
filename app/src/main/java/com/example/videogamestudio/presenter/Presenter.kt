@@ -32,4 +32,5 @@ class Presenter(val view: MainViewVG, val model: Model) {
             view.updateRecycler()
         }
     }
+
 }

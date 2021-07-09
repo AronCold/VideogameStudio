@@ -23,11 +23,6 @@
             android:layout_height="wrap_content"
             tools:text="name" />
 
-        <TextView
-            android:id="@+id/tvGenres"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="genre" />
 
         <TextView
             android:id="@+id/tvReleaseDate"
@@ -46,6 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="consoles" />
+
 
     </LinearLayout>
 

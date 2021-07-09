@@ -56,7 +56,8 @@ class Network private constructor(context: Context) {
                                 "genres.name, " +
                                 "cover.url," +
                                 "cover.height," +
-                                "cover.width"
+                                "cover.width," +
+                                "platforms.name"
                     )
                     .search(query!!)
                     .limit(500)
@@ -66,7 +67,7 @@ class Network private constructor(context: Context) {
                     if (games.isNotEmpty()){
                         Log.d("PideJuegos", games[0].cover.height.toString())
                         Log.d("PideJuegos", games[0].cover.width.toString())
-                        Log.d("PideJuegos", games[0].cover.url)
+                        Log.d("PideJuegos", games[0].platformsList[0].name)
                     }
                     else Log.d("PideJuegos", "Juegos esta vacio")
                 } catch (e: RequestException) {

@@ -2,27 +2,31 @@ package com.example.videogamestudio.view
 
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.SearchView
 import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
+import android.widget.ViewAnimator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.videogamestudio.R
 import com.example.videogamestudio.model.Model
+import com.example.videogamestudio.model.Videogame
 import com.example.videogamestudio.presenter.Presenter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.DelicateCoroutinesApi
 import proto.Game
+import java.lang.reflect.Type
 
 
 class MainActivity : AppCompatActivity(), MainViewVG {
 
-    override var recyclerGames = emptyList<Game>()
-    override var historialJuegos = emptyList<Game>()
+    override var recyclerGames = emptyList<Videogame>()
+    override var historialJuegos = emptyList<Videogame>()
 
     lateinit var presenter: Presenter
 
@@ -50,26 +54,61 @@ class MainActivity : AppCompatActivity(), MainViewVG {
 
         contexto = applicationContext
 
+
+
         searchButton.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                //save
+                //Editor prefsEditor = mPrefs.edit();
+                // Gson gson = new Gson();
+                // String json = gson.toJson(YourSerializableObject);
+                // prefsEditor.putString("SerializableObject", json);
+                // prefsEditor.commit();
+
+                //get
+                //val gson = Gson()
+                //val json: String = mPrefs.getString("SerializableObject", "")
+                //yourSerializableObject =
+                //    gson.fromJson<Any>(json, YourSerializableObject::class.java)
                 if (query != null) {
                     Log.d("PideJuegos", "llamando a presenter.getGames")
                     presenter.getGamesByName(query)
                 }
                 else {
-                    TODO("Si la cadena es nula actualizar el recicler con el historial de juegos")
+                    //TOD("Si la cadena es nula actualizar el recicler con el historial de juegos")
+                    historialJuegos = recibeHistorial()
+                    Log.d("Historial", "Recibimos el historial")
                 }
+                searchButton.clearFocus()
                 return true
             }
+
+
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 return false
             }
         })
 
+        //"Recibir historial"
+        historialJuegos = recibeHistorial()
+        Log.d("Historial", "Recibimos el historial")
+
         initRecycler()
 
-        TODO("Recibir historial")
+
+
+    }
+
+    private fun recibeHistorial(): MutableList<Videogame> {
+        var mPrefs = getSharedPreferences("historialJuegos", MODE_PRIVATE)
+
+        if(!mPrefs.getString("listaHistorial", "").equals("")){
+            var historialJSONString = mPrefs.getString("listaHistorial", "")
+            val type = object : TypeToken<MutableList<Videogame?>?>() {}.type
+            return Gson().fromJson(historialJSONString, type)
+        }
+        return ArrayList()
     }
 
 
@@ -84,7 +123,28 @@ class MainActivity : AppCompatActivity(), MainViewVG {
     }
 
     override fun updateGames(games : List<Game>) {
-        recyclerGames = games
+
+        var listaTemporal : MutableList<Videogame> = ArrayList()
+        if(!games.isEmpty()){
+            for(i in 0..games.size-1) {
+                listaTemporal.add(convertirJuego(games[i]))
+            }
+        }
+
+        recyclerGames = listaTemporal
+    }
+
+    private fun convertirJuego(game: Game): Videogame {
+        return Videogame(
+            game.name,
+            java.util.Date(game.firstReleaseDate.seconds * 1000),
+            game.genresList,
+            game.involvedCompaniesList,
+            game.platformsList,
+            "https:" + game.cover.url.replace("t_thumb", "t_cover_big"),
+            game.aggregatedRating,
+            game.summary
+        )
     }
 
     override fun updateRecycler() {
@@ -95,6 +155,12 @@ class MainActivity : AppCompatActivity(), MainViewVG {
 
     override fun onDestroy() {
         super.onDestroy()
-        TODO("Guardar historial")
+        //TOD("Guardar historial")
+        var mPrefs = getSharedPreferences("historialJuegos", MODE_PRIVATE)
+        var editor : SharedPreferences.Editor = mPrefs.edit()
+
+        var historialJSONString = Gson().toJson(historialJuegos);
+        editor.putString("listaHistorial", historialJSONString);
+        editor.commit();
     }
 }
