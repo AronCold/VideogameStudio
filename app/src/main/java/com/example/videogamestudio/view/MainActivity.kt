@@ -58,26 +58,16 @@ class MainActivity : AppCompatActivity(), MainViewVG {
 
         searchButton.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                //save
-                //Editor prefsEditor = mPrefs.edit();
-                // Gson gson = new Gson();
-                // String json = gson.toJson(YourSerializableObject);
-                // prefsEditor.putString("SerializableObject", json);
-                // prefsEditor.commit();
-
-                //get
-                //val gson = Gson()
-                //val json: String = mPrefs.getString("SerializableObject", "")
-                //yourSerializableObject =
-                //    gson.fromJson<Any>(json, YourSerializableObject::class.java)
-                if (query != null) {
+                Log.d("PideJuegos", "searchbutton pulsado")
+                if (!query.equals("sHistory")) {
                     Log.d("PideJuegos", "llamando a presenter.getGames")
                     presenter.getGamesByName(query)
                 }
                 else {
-                    //TOD("Si la cadena es nula actualizar el recicler con el historial de juegos")
+                    //si la cadena es nula actualizar el recicler con el historial de juegos
                     historialJuegos = recibeHistorial()
                     Log.d("Historial", "Recibimos el historial")
+                    updateRecycler(historialJuegos)
                 }
                 searchButton.clearFocus()
                 return true
@@ -95,9 +85,6 @@ class MainActivity : AppCompatActivity(), MainViewVG {
         Log.d("Historial", "Recibimos el historial")
 
         initRecycler()
-
-
-
     }
 
     private fun recibeHistorial(): MutableList<Videogame> {
@@ -114,7 +101,7 @@ class MainActivity : AppCompatActivity(), MainViewVG {
 
     private fun initRecycler() {
         rvVideogames.layoutManager = LinearLayoutManager(this)
-        adapter = VideogameAdapter(recyclerGames)
+        adapter = VideogameAdapter(historialJuegos)
         rvVideogames.adapter = adapter
     }
 
@@ -143,13 +130,14 @@ class MainActivity : AppCompatActivity(), MainViewVG {
             game.platformsList,
             "https:" + game.cover.url.replace("t_thumb", "t_cover_big"),
             game.aggregatedRating,
-            game.summary
+            game.summary,
+            game.id.toInt()
         )
     }
 
-    override fun updateRecycler() {
+    override fun updateRecycler(juegos : List<Videogame>) {
         Log.d("PideJuegos", "Updating Recycler")
-        adapter.videogames = recyclerGames
+        adapter.videogames = juegos
         adapter.notifyDataSetChanged();
     }
 

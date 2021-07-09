@@ -29,7 +29,7 @@ class Presenter(val view: MainViewVG, val model: Model) {
             Log.d("PideJuegos", "Actualizando juegos del view")
             games = model.getGames()
             view.updateGames(games)
-            view.updateRecycler()
+            view.updateRecycler(view.recyclerGames)
         }
     }
 

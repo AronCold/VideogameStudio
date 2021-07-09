@@ -28,15 +28,13 @@ class VideogameAdapter(var videogames: List<Videogame>) :
     override fun onBindViewHolder(holder: VideogameHolder, position: Int) {
         val context = holder.itemView.context
         holder.render(videogames[position])
-        holder.itemView.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                val datosApp = Intent(context, JuegoActivity::class.java).apply {
+        holder.itemView.setOnClickListener {
+            val datosApp = Intent(context, JuegoActivity::class.java).apply {
 
-                    putExtra("Juego", videogames[position])
-                }
-                context.startActivity(datosApp)
+                putExtra("Juego", videogames[position])
             }
-        })
+            context.startActivity(datosApp)
+        }
     }
 
     override fun getItemCount(): Int = videogames.size

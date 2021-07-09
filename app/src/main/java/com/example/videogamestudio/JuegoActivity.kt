@@ -1,9 +1,13 @@
 package com.example.videogamestudio
 
+import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import com.example.videogamestudio.model.Videogame
 import com.google.gson.Gson
@@ -19,6 +23,8 @@ class JuegoActivity : AppCompatActivity() {
 
     lateinit var tvName : TextView
     lateinit var tvGenre : TextView
+    lateinit var btnRelated : Button
+    lateinit var context : Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,27 +32,32 @@ class JuegoActivity : AppCompatActivity() {
 
         tvName = findViewById(R.id.tvName)
         //tvGenre = findViewById(R.id.)
+        btnRelated = findViewById(R.id.rsButton)
 
-        //"recibir historial de juegos para meter en sharedPreferences"
+        //recibe juego
         videogame = intent.getSerializableExtra("Juego") as Videogame
         tvName.setText(videogame.name)
-        //tvGenre.setText(videogame.genres)
-
-        //val name:String, val releaseDate:Date,
-        //    val genres: List<Genre>, val involved_companies: MutableList<InvolvedCompany>,
-        //    val platforms: MutableList<Platform>, val image:String,
-        //    val aggregated_rating: Double, val summary: String) : Serializable
 
         //"Recibir juego en el intent")
         //"Mostrar datos y poner botón")
         //"Llamar a la siguiente actividad de busqueda relacionada")
 
+        //actualizar historial de juegos para meter en sharedPreferences
         actualizarHistorial(videogame)
+
+        context = this.applicationContext
+
+        btnRelated.setOnClickListener {
+            val datosApp = Intent(context, RelatedSearchActivity::class.java).apply {
+                putExtra("Juego", videogame)
+            }
+            startActivity(datosApp)
+        }
     }
 
     private fun actualizarHistorial(videogame: Videogame) {
         //recibir historial
-        var mPrefs = getSharedPreferences("historialJuegos", MODE_PRIVATE)
+        val mPrefs = getSharedPreferences("historialJuegos", MODE_PRIVATE)
         var historialLista: MutableList<Videogame> = ArrayList()
         var historialJSONString: String = ""
 
@@ -56,10 +67,17 @@ class JuegoActivity : AppCompatActivity() {
             historialLista = Gson().fromJson(historialJSONString, type)
         }
 
-        //modificar lista
-        historialLista.add(videogame)
+        //comprobamos si el juego está ya en la lista
+        if(historialLista.find{ it.name == videogame.name }  == null) {
+            //si no está en la lista comprobamos si el limite alcanzado
+            if (historialLista.size >= 30) {
+                //si limite no alcanzado modificar lista
+                historialLista.removeAt(historialLista.size - 1)
+            }
+            historialLista.add(0, videogame)
+            Log.d("Juego añadido", "Se ha añadido un juego en la lista " + historialLista.size)
+        }
 
-        Log.d("Juego añadido", "Se ha añadido un juego en la lista " + historialLista.size)
         //guardarLista
         var editor : SharedPreferences.Editor = mPrefs.edit()
         historialJSONString = Gson().toJson(historialLista);

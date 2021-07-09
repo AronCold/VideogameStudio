@@ -9,5 +9,5 @@ interface MainViewVG {
     var historialJuegos : List<Videogame>
     fun showError(message: String)
     fun updateGames(games : List<Game>)
-    fun updateRecycler()
+    fun updateRecycler(juegos : List<Videogame>)
 }
